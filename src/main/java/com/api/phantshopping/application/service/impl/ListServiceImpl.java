@@ -1,4 +1,4 @@
-package com.api.phantshopping.application.serviceImpl;
+package com.api.phantshopping.application.service.impl;
 
 import com.api.phantshopping.application.service.ListService;
 import com.api.phantshopping.domain.dto.request.ListRequestDto;
