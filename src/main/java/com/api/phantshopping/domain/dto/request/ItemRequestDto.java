@@ -11,5 +11,4 @@ public class ItemRequestDto {
 
     private String itemTitle;
     private String description;
-    private Boolean purchased;
 }

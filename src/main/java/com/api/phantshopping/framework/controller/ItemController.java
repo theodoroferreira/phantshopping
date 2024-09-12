@@ -23,7 +23,7 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public ResponseEntity<java.util.List<Item>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }

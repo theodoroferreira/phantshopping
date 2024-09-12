@@ -20,8 +20,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemResponseDto create(ItemRequestDto request) {
-        request.setPurchased(Boolean.FALSE);
         Item item = mapper.map(request, Item.class);
+        item.setPurchased(Boolean.FALSE);
         return mapper.map(repository.save(item), ItemResponseDto.class);
     }
 

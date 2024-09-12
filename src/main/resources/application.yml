@@ -7,7 +7,7 @@ spring:
     name: phantshopping
   datasource:
     url: jdbc:postgresql://localhost:5432/phantshopping_db
-    username: root
+    username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
   jpa:
