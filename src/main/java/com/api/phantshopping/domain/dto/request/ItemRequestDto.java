@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemRequestDto {
 
-    private String itemTitle;
+    private String itemName;
     private String description;
+    private UUID listId;
 }

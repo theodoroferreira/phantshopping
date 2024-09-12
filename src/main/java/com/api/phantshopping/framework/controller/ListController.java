@@ -22,7 +22,7 @@ public class ListController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<java.util.List<List>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }

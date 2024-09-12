@@ -18,6 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserResponseDto {
 
+    private UUID userId;
     private String name;
     @Email
     private String email;

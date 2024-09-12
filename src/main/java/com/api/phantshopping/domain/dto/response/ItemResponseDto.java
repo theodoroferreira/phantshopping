@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ItemResponseDto {
 
-    private String itemTitle;
+    private String itemName;
     private String description;
 }
