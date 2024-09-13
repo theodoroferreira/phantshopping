@@ -1,11 +1,6 @@
 package com.api.phantshopping.domain.dto.response;
 
-import com.api.phantshopping.domain.model.List;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Email;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +15,10 @@ public class UserResponseDto {
 
     private UUID userId;
     private String name;
-    @Email
     private String email;
     private Long itemsAdded;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate entryDate;
     private Boolean active;
-    private java.util.List<List> lists;
+    private java.util.List<ListResponseDto> lists;
 }

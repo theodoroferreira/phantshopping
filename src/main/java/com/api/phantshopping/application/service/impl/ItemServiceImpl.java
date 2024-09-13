@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +31,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findAll() {
-        return repository.findAll();
+    public List<ItemResponseDto> findAll() {
+        List<ItemResponseDto> items = new ArrayList<>();
+        repository.findAll().forEach(item -> {
+            items.add(mapper.map(item, ItemResponseDto.class));
+        });
+        return items;
     }
 }

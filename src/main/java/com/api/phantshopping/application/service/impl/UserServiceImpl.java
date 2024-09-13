@@ -1,7 +1,6 @@
 package com.api.phantshopping.application.service.impl;
 
 import com.api.phantshopping.application.repository.UserRepository;
-import com.api.phantshopping.application.service.ListService;
 import com.api.phantshopping.application.service.UserService;
 import com.api.phantshopping.domain.dto.request.UserRequestDto;
 import com.api.phantshopping.domain.dto.response.UserResponseDto;
@@ -10,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,17 +24,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto create(UserRequestDto request) {
         User user = mapper.map(request, User.class);
+        user.setItemsAdded(0L);
+        user.setEntryDate(LocalDate.now());
         user.setActive(Boolean.TRUE);
         return mapper.map(repository.save(user), UserResponseDto.class);
     }
 
     @Override
     public List<UserResponseDto> findAll() {
-        List<UserResponseDto> list = new ArrayList<>();
+        List<UserResponseDto> users = new ArrayList<>();
         repository.findAll().forEach(user -> {
-            list.add(mapper.map(user, UserResponseDto.class));
+            users.add(mapper.map(user, UserResponseDto.class));
         });
-        return list;
+        return users;
     }
 
     @Override
@@ -43,13 +45,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public com.api.phantshopping.domain.model.List addListToUser(UUID userId, com.api.phantshopping.domain.model.List list) {
+    public void addListToUser(UUID userId, com.api.phantshopping.domain.model.List list) {
         User user = repository.findById(userId).get();
-
         list.setUser(user);
         user.getLists().add(list);
-
         repository.save(user);
-        return list;
+    }
+
+    @Override
+    public void addItemToCount(UUID userId) {
+        User user = repository.findById(userId).get();
+        user.setItemsAdded(user.getItemsAdded() + 1);
+        repository.save(user);
     }
 }

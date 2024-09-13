@@ -14,5 +14,7 @@ public interface UserService {
 
     UserResponseDto findUserById(UUID userId);
 
-    com.api.phantshopping.domain.model.List addListToUser(UUID userId, com.api.phantshopping.domain.model.List list);
+    void addListToUser(UUID userId, com.api.phantshopping.domain.model.List list);
+
+    void addItemToCount(UUID userId);
 }

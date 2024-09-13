@@ -3,7 +3,6 @@ package com.api.phantshopping.framework.controller;
 import com.api.phantshopping.application.service.ListService;
 import com.api.phantshopping.domain.dto.request.ListRequestDto;
 import com.api.phantshopping.domain.dto.response.ListResponseDto;
-import com.api.phantshopping.domain.model.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class ListController {
     }
 
     @GetMapping
-    public ResponseEntity<java.util.List<List>> findAll() {
+    public ResponseEntity<java.util.List<ListResponseDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 
