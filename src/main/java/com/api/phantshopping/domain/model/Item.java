@@ -1,6 +1,5 @@
 package com.api.phantshopping.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +21,6 @@ public class Item {
     private String description;
     private Boolean purchased;
     @ManyToOne
-    @JoinColumn(name = "list_id")
-    @JsonBackReference
     private List list;
 
 }

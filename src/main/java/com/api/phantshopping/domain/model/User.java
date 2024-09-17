@@ -1,6 +1,5 @@
 package com.api.phantshopping.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +24,6 @@ public class User {
     private Long itemsAdded;
     private LocalDate entryDate;
     private Boolean active;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private java.util.List<List> lists;
 }

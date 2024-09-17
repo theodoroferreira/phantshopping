@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto findUserById(UUID id) {
-        return mapper.map(repository.findById(id), UserResponseDto.class);
+        return mapper.map(repository.findById(id).get(), UserResponseDto.class);
     }
 
     @Override

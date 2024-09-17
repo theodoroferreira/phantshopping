@@ -4,7 +4,6 @@ import com.api.phantshopping.application.repository.ListRepository;
 import com.api.phantshopping.application.service.ListService;
 import com.api.phantshopping.application.service.UserService;
 import com.api.phantshopping.domain.dto.request.ListRequestDto;
-import com.api.phantshopping.domain.dto.response.ItemResponseDto;
 import com.api.phantshopping.domain.dto.response.ListResponseDto;
 import com.api.phantshopping.domain.model.Item;
 import com.api.phantshopping.domain.model.List;
@@ -37,14 +36,6 @@ public class ListServiceImpl implements ListService {
             lists.add(mapper.map(list, ListResponseDto.class));
         });
         return lists;
-    }
-
-    public List findByItemContains() {
-        java.util.List<ItemResponseDto> items = new ArrayList<>();
-        repository.findAll().forEach(item -> {
-            items.add(mapper.map(item, ItemResponseDto.class));
-        });
-        return items;
     }
 
     @Override

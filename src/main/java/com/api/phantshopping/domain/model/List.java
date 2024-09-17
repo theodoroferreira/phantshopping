@@ -1,7 +1,5 @@
 package com.api.phantshopping.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,10 +19,7 @@ public class List {
     private UUID listId;
     private String listName;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
-    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL)
     private java.util.List<Item> items;
 }
