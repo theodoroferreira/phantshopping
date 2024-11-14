@@ -8,13 +8,19 @@ import java.util.UUID;
 
 public interface UserService {
 
-    UserResponseDto create(UserRequestDto request);
+    UserResponseDto createUser(UserRequestDto request);
 
-    List<UserResponseDto> findAll();
+    List<UserResponseDto> findAllUsers();
 
     UserResponseDto findUserById(UUID userId);
 
+    UserResponseDto updateUser(UUID id, UserRequestDto request);
+
+    void deleteUser(UUID id);
+
     void addListToUser(UUID userId, com.api.phantshopping.domain.model.List list);
 
-    void addItemToCount(UUID userId);
+    void addItem(UUID userId);
+
+    void subtractItem(UUID userId);
 }

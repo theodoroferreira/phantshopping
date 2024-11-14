@@ -13,4 +13,10 @@ public interface ListService {
     java.util.List<ListResponseDto> findAll();
 
     void addItemToList(UUID listId, Item item);
+
+    ListResponseDto findListById(UUID id);
+
+    ListResponseDto updateList(UUID id, ListRequestDto request);
+
+    void deleteList(UUID id);
 }

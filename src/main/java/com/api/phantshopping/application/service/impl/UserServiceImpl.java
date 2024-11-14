@@ -4,14 +4,13 @@ import com.api.phantshopping.application.repository.UserRepository;
 import com.api.phantshopping.application.service.UserService;
 import com.api.phantshopping.domain.dto.request.UserRequestDto;
 import com.api.phantshopping.domain.dto.response.UserResponseDto;
+import com.api.phantshopping.domain.model.List;
 import com.api.phantshopping.domain.model.User;
+import com.api.phantshopping.framework.translate.UserTranslator;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,33 +18,47 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
-    private final ModelMapper mapper;
 
     @Override
-    public UserResponseDto create(UserRequestDto request) {
-        User user = mapper.map(request, User.class);
-        user.setItemsAdded(0L);
-        user.setEntryDate(LocalDate.now());
-        user.setActive(Boolean.TRUE);
-        return mapper.map(repository.save(user), UserResponseDto.class);
+    public UserResponseDto createUser(UserRequestDto request) {
+        User user = UserTranslator.builder().build().fromRequestToEntity(request);
+        return UserTranslator.builder().build().toResponse(repository.save(user));
     }
 
     @Override
-    public List<UserResponseDto> findAll() {
-        List<UserResponseDto> users = new ArrayList<>();
+    public java.util.List<UserResponseDto> findAllUsers() {
+        java.util.List<UserResponseDto> users = new ArrayList<>();
         repository.findAll().forEach(user -> {
-            users.add(mapper.map(user, UserResponseDto.class));
+            users.add(UserTranslator.builder().build().toResponse(user));
         });
         return users;
     }
 
     @Override
     public UserResponseDto findUserById(UUID id) {
-        return mapper.map(repository.findById(id).get(), UserResponseDto.class);
+        return UserTranslator.builder().build().toResponse(repository.findById(id).get());
     }
 
     @Override
-    public void addListToUser(UUID userId, com.api.phantshopping.domain.model.List list) {
+    public UserResponseDto updateUser(UUID id, UserRequestDto request) {
+        User user = repository.findById(id).get();
+
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+
+        repository.save(user);
+
+        return UserTranslator.builder().build().toResponse(user);
+    }
+
+    @Override
+    public void deleteUser(UUID id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public void addListToUser(UUID userId, List list) {
         User user = repository.findById(userId).get();
         list.setUser(user);
         user.getLists().add(list);
@@ -53,9 +66,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addItemToCount(UUID userId) {
+    public void addItem(UUID userId) {
         User user = repository.findById(userId).get();
         user.setItemsAdded(user.getItemsAdded() + 1);
+        repository.save(user);
+    }
+
+    @Override
+    public void subtractItem(UUID userId) {
+        User user = repository.findById(userId).get();
+        user.setItemsAdded(user.getItemsAdded() - 1);
         repository.save(user);
     }
 }
