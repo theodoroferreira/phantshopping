@@ -1,5 +1,4 @@
 FROM openjdk:17-jdk AS build
-WORKDIR /app
 
 COPY gradlew .
 COPY gradle gradle
@@ -15,6 +14,6 @@ RUN ./gradlew clean build -x test
 FROM openjdk:17-jdk
 VOLUME /tmp
 
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 EXPOSE 8080
