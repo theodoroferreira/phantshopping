@@ -9,7 +9,7 @@ COPY src src
 
 RUN chmod +x ./gradlew
 
-RUN ./gradlew clean build -x test
+RUN ./gradlew clean build -x test --info
 
 FROM openjdk:17-jdk
 VOLUME /tmp
