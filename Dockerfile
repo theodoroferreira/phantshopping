@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk
+FROM azul/zulu-openjdk:17-latest
 VOLUME /tmp
 
 COPY --from=build build/libs/*.jar app.jar
