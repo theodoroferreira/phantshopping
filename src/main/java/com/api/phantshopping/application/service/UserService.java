@@ -6,7 +6,8 @@ import com.api.phantshopping.domain.dto.response.UserResponseDto;
 import java.util.List;
 import java.util.UUID;
 
-public interface UserService {
+public interface UserService
+{
 
     UserResponseDto createUser(UserRequestDto request);
 
@@ -23,4 +24,6 @@ public interface UserService {
     void addItem(UUID userId);
 
     void subtractItem(UUID userId);
+
+    UUID autenticaUser(String email, String password);
 }

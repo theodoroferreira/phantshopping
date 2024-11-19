@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -56,5 +57,13 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void deleteItem(UUID id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<ItemResponseDto> findItemsByList(UUID listId)
+    {
+        List<ItemResponseDto> items = new ArrayList<>();
+        repository.findItemByListId(listId).forEach(item -> items.add(ItemTranslator.builder().build().toResponse(item)));
+        return items;
     }
 }

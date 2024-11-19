@@ -1,14 +1,14 @@
 server:
-  port: 8080
+  port: 80
   servlet:
     context-path: /api
 spring:
   application:
     name: phantshopping
   datasource:
-    url: jdbc:postgresql://localhost:5432/phantshopping_db
+    url: jdbc:postgresql://52.23.221.207:5432/listadecompras
     username: postgres
-    password: root
+    password: 123456
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

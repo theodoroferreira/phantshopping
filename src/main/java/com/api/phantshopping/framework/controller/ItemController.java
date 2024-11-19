@@ -91,4 +91,17 @@ public class ItemController {
         service.deleteItem(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("/find-by-list/{listId}")
+    @Operation(summary = "Find Items by List Identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Items successfully found.",
+                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request."),
+            @ApiResponse(responseCode = "404", description = "Items not found."),
+            @ApiResponse(responseCode = "500", description = "Internal error.")
+    })
+    public ResponseEntity<java.util.List<ItemResponseDto>> findItemsByList(@PathVariable UUID listId) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findItemsByList(listId));
+    }
 }

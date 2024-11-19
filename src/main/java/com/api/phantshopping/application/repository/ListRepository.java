@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ListRepository extends JpaRepository<List, UUID> {
+public interface ListRepository extends JpaRepository<List, UUID>
+{
 
     java.util.List<List> findAll();
+
+    java.util.List<List> findListByUserId(UUID userId);
 }

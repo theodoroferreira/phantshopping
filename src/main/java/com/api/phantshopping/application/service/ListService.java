@@ -6,7 +6,8 @@ import com.api.phantshopping.domain.model.Item;
 
 import java.util.UUID;
 
-public interface ListService {
+public interface ListService
+{
 
     ListResponseDto create(ListRequestDto list);
 
@@ -19,4 +20,6 @@ public interface ListService {
     ListResponseDto updateList(UUID id, ListRequestDto request);
 
     void deleteList(UUID id);
+
+    java.util.List<ListResponseDto> findListByUserId(UUID userId);
 }

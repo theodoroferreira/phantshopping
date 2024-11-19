@@ -78,4 +78,17 @@ public class UserServiceImpl implements UserService {
         user.setItemsAdded(user.getItemsAdded() - 1);
         repository.save(user);
     }
+
+    @Override
+    public UUID autenticaUser(String email, String password) {
+        User user = repository.findByEmailAndPassword(email, password);
+        if (user == null) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+        if (!user.getPassword().equals(password)) {
+            throw new RuntimeException("Senha inválida");
+        }
+
+        return user.getId();
+    }
 }

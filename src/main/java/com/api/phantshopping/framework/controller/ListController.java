@@ -13,7 +13,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +21,8 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/lists")
-public class ListController {
+public class ListController
+{
 
     private final ListService service;
 
@@ -34,7 +34,8 @@ public class ListController {
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<ListResponseDto> createList(@RequestBody @Valid ListRequestDto request) {
+    public ResponseEntity<ListResponseDto> createList(@RequestBody @Valid ListRequestDto request)
+    {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
@@ -47,7 +48,8 @@ public class ListController {
             @ApiResponse(responseCode = "404", description = "Lists not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<java.util.List<ListResponseDto>> findAllLists() {
+    public ResponseEntity<java.util.List<ListResponseDto>> findAllLists()
+    {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 
@@ -60,7 +62,8 @@ public class ListController {
             @ApiResponse(responseCode = "404", description = "List not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<ListResponseDto> findListById(@PathVariable UUID id) {
+    public ResponseEntity<ListResponseDto> findListById(@PathVariable UUID id)
+    {
         return ResponseEntity.status(HttpStatus.OK).body(service.findListById(id));
     }
 
@@ -73,7 +76,8 @@ public class ListController {
             @ApiResponse(responseCode = "404", description = "List not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<ListResponseDto> updateList(@PathVariable UUID id, @RequestBody @Validated ListRequestDto request) {
+    public ResponseEntity<ListResponseDto> updateList(@PathVariable UUID id, @RequestBody @Validated ListRequestDto request)
+    {
         return ResponseEntity.status(HttpStatus.OK).body(service.updateList(id, request));
     }
 
@@ -85,9 +89,24 @@ public class ListController {
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<Void> deleteList(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteList(@PathVariable UUID id)
+    {
         service.deleteList(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/find-list-by-user/{userId}")
+    @Operation(summary = "Find List by User Identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Lists successfully found.",
+                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request."),
+            @ApiResponse(responseCode = "404", description = "Lists not found."),
+            @ApiResponse(responseCode = "500", description = "Internal error.")
+    })
+    public ResponseEntity<java.util.List<ListResponseDto>> findListByUserId(@PathVariable UUID userId)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findListByUserId(userId));
     }
 
 }

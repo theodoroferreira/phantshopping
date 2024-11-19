@@ -3,6 +3,7 @@ package com.api.phantshopping.application.service;
 import com.api.phantshopping.domain.dto.request.ItemRequestDto;
 import com.api.phantshopping.domain.dto.response.ItemResponseDto;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ItemService {
@@ -16,4 +17,6 @@ public interface ItemService {
     ItemResponseDto updateItem(UUID id, ItemRequestDto request);
 
     void deleteItem(UUID id);
+
+    List<ItemResponseDto> findItemsByList(UUID listId);
 }
