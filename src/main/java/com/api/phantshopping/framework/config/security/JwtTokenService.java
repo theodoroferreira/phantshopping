@@ -29,7 +29,7 @@ public class JwtTokenService {
                     .withSubject(user.getUsername())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
-            throw new JWTCreationException("Error generation token.", exception);
+            throw new JWTCreationException("Error generating token.", exception);
         }
     }
 
