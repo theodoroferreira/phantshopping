@@ -2,7 +2,10 @@ package com.api.phantshopping.framework.translate;
 
 import com.api.phantshopping.domain.dto.request.UserRequestDto;
 import com.api.phantshopping.domain.dto.response.UserResponseDto;
+import com.api.phantshopping.domain.enums.RoleName;
+import com.api.phantshopping.domain.model.Role;
 import com.api.phantshopping.domain.model.User;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -31,16 +35,17 @@ public class UserTranslator {
                 .build();
     }
 
-    public User fromRequestToEntity(@NotNull final UserRequestDto from) {
+    public User fromRequestToEntity(@NotNull final UserRequestDto from, final String encodedPassword) {
         return User.builder()
                 .id(UUID.randomUUID())
                 .name(from.getName())
                 .email(from.getEmail())
-                .password(from.getPassword())
+                .password(encodedPassword)
                 .itemsAdded(0L)
                 .entryDate(LocalDate.now())
                 .active(Boolean.TRUE)
                 .lists(Collections.emptyList())
+                .roles(List.of(Role.builder().name(RoleName.ROLE_USER).build()))
                 .build();
     }
 

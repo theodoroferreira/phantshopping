@@ -4,8 +4,11 @@ import com.api.phantshopping.application.repository.UserRepository;
 import com.api.phantshopping.application.service.UserService;
 import com.api.phantshopping.domain.dto.request.UserRequestDto;
 import com.api.phantshopping.domain.dto.response.UserResponseDto;
+import com.api.phantshopping.domain.enums.RoleName;
 import com.api.phantshopping.domain.model.List;
+import com.api.phantshopping.domain.model.Role;
 import com.api.phantshopping.domain.model.User;
+import com.api.phantshopping.framework.config.security.SecurityConfig;
 import com.api.phantshopping.framework.translate.UserTranslator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,12 +23,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
 
-    private final PasswordEncoder passwordEncoder;
+    private final SecurityConfig securityConfig;
 
     @Override
     public UserResponseDto createUser(UserRequestDto request) {
-        User user = UserTranslator.builder().build().fromRequestToEntity(request);
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        User user = UserTranslator.builder().build().fromRequestToEntity(request, securityConfig
+                .passwordEncoder()
+                .encode(request.getPassword()));
         return UserTranslator.builder().build().toResponse(repository.save(user));
     }
 
