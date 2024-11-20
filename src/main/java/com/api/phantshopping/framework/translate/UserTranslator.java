@@ -5,6 +5,8 @@ import com.api.phantshopping.domain.dto.response.UserResponseDto;
 import com.api.phantshopping.domain.model.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -17,8 +19,8 @@ public class UserTranslator {
     public UserResponseDto toResponse(@NotNull final User from) {
         return UserResponseDto.builder()
                 .userId(from.getId())
-                .name(from.getName())
-                .email(from.getEmail())
+                .name(from.getName().trim())
+                .email(from.getEmail().trim())
                 .itemsAdded(from.getItemsAdded())
                 .entryDate(from.getEntryDate())
                 .active(from.getActive())

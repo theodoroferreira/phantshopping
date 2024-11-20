@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,43 +93,5 @@ public class UserController
     {
         service.deleteUser(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    public class AuthRequestDto {
-
-        private String email;
-        private String password;
-
-        // Getters e setters
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-    }
-
-    @PostMapping("/autentica-user")
-    @Operation(summary = "Autentica User")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User autenticated successfully.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid request."),
-            @ApiResponse(responseCode = "404", description = "User not found."),
-            @ApiResponse(responseCode = "500", description = "Internal error.")
-    })
-    public ResponseEntity<UUID> autenticaUser(@RequestBody AuthRequestDto params)
-    {
-        UUID uuid = service.autenticaUser(params.getEmail(), params.getPassword());
-        return ResponseEntity.status(HttpStatus.OK).body(uuid);
     }
 }

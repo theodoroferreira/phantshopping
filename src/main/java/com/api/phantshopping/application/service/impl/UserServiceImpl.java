@@ -8,6 +8,7 @@ import com.api.phantshopping.domain.model.List;
 import com.api.phantshopping.domain.model.User;
 import com.api.phantshopping.framework.translate.UserTranslator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,9 +20,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public UserResponseDto createUser(UserRequestDto request) {
         User user = UserTranslator.builder().build().fromRequestToEntity(request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         return UserTranslator.builder().build().toResponse(repository.save(user));
     }
 
@@ -77,18 +81,5 @@ public class UserServiceImpl implements UserService {
         User user = repository.findById(userId).get();
         user.setItemsAdded(user.getItemsAdded() - 1);
         repository.save(user);
-    }
-
-    @Override
-    public UUID autenticaUser(String email, String password) {
-        User user = repository.findByEmailAndPassword(email, password);
-        if (user == null) {
-            throw new RuntimeException("Usuário não encontrado");
-        }
-        if (!user.getPassword().equals(password)) {
-            throw new RuntimeException("Senha inválida");
-        }
-
-        return user.getId();
     }
 }

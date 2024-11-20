@@ -24,6 +24,4 @@ public interface UserService
     void addItem(UUID userId);
 
     void subtractItem(UUID userId);
-
-    UUID autenticaUser(String email, String password);
 }
