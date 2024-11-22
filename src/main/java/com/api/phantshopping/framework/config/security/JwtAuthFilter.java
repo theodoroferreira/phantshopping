@@ -26,18 +26,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String token = recoveryToken(request);
-        if (token != null) {
-            String subject = jwtTokenService.getSubjectFromToken(token);
-            User user = userRepository.findByEmail(subject).get();
-            UserDetailsImpl userDetails = new UserDetailsImpl(user);
-
-            Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
-            throw new RuntimeException("Missing token.");
+        if (token==null) {
+            filterChain.doFilter(request, response);
+            return;
         }
+        String subject = jwtTokenService.getSubjectFromToken(token);
+        User user = userRepository.findByEmail(subject).get();
+        UserDetailsImpl userDetails = new UserDetailsImpl(user);
+
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }
 

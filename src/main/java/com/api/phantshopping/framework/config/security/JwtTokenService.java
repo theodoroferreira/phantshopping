@@ -23,7 +23,6 @@ public class JwtTokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
             return JWT.create()
-                    .withIssuer(ISSUER)
                     .withIssuedAt(creationDate())
                     .withExpiresAt(expirationDate())
                     .withSubject(user.getUsername())
@@ -37,7 +36,6 @@ public class JwtTokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
             return JWT.require(algorithm)
-                    .withIssuer(ISSUER)
                     .build()
                     .verify(token)
                     .getSubject();
