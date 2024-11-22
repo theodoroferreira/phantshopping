@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer
     {
         // Configuração global para permitir CORS em todas as rotas
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://54.158.233.226") // URLs permitidas (ajuste conforme necessário)
+                .allowedOrigins("http://localhost:3000", "http://15.229.250.177/") // URLs permitidas (ajuste conforme necessário)
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos
                 .allowedHeaders("*") // Permite todos os cabeçalhos
                 .allowCredentials(true); // Permite credenciais (cookies, tokens)

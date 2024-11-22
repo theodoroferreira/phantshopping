@@ -13,6 +13,8 @@ public class ItemTranslator {
         return ItemResponseDto.builder()
                 .itemName(from.getItemName())
                 .description(from.getDescription())
+                .id(from.getId())
+                .purchased(from.getPurchased())
                 .build();
     }
 

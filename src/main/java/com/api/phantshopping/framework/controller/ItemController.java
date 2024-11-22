@@ -2,9 +2,7 @@ package com.api.phantshopping.framework.controller;
 
 import com.api.phantshopping.application.service.ItemService;
 import com.api.phantshopping.domain.dto.request.ItemRequestDto;
-import com.api.phantshopping.domain.dto.request.ListRequestDto;
 import com.api.phantshopping.domain.dto.response.ItemResponseDto;
-import com.api.phantshopping.domain.dto.response.ListResponseDto;
 import com.api.phantshopping.domain.dto.response.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,7 +13,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +21,8 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/items")
-public class ItemController {
+public class ItemController
+{
 
     private final ItemService service;
 
@@ -36,7 +34,8 @@ public class ItemController {
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<ItemResponseDto> createList(@RequestBody @Valid ItemRequestDto request) {
+    public ResponseEntity<ItemResponseDto> createList(@RequestBody @Valid ItemRequestDto request)
+    {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
@@ -49,7 +48,8 @@ public class ItemController {
             @ApiResponse(responseCode = "404", description = "Items not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<java.util.List<ItemResponseDto>> findAll() {
+    public ResponseEntity<java.util.List<ItemResponseDto>> findAll()
+    {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 
@@ -62,7 +62,8 @@ public class ItemController {
             @ApiResponse(responseCode = "404", description = "Item not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<ItemResponseDto> findItemById(@PathVariable UUID id) {
+    public ResponseEntity<ItemResponseDto> findItemById(@PathVariable UUID id)
+    {
         return ResponseEntity.status(HttpStatus.OK).body(service.findItemById(id));
     }
 
@@ -75,7 +76,8 @@ public class ItemController {
             @ApiResponse(responseCode = "404", description = "Item not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<ItemResponseDto> updateItem(@PathVariable UUID id, @RequestBody @Validated ItemRequestDto request) {
+    public ResponseEntity<ItemResponseDto> updateItem(@PathVariable UUID id, @RequestBody @Validated ItemRequestDto request)
+    {
         return ResponseEntity.status(HttpStatus.OK).body(service.updateItem(id, request));
     }
 
@@ -87,7 +89,8 @@ public class ItemController {
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<Void> deleteItem(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteItem(@PathVariable UUID id)
+    {
         service.deleteItem(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -101,7 +104,8 @@ public class ItemController {
             @ApiResponse(responseCode = "404", description = "Items not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<java.util.List<ItemResponseDto>> findItemsByList(@PathVariable UUID listId) {
+    public ResponseEntity<java.util.List<ItemResponseDto>> findItemsByList(@PathVariable UUID listId)
+    {
         return ResponseEntity.status(HttpStatus.OK).body(service.findItemsByList(listId));
     }
 }

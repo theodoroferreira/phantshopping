@@ -48,6 +48,7 @@ public class ItemServiceImpl implements ItemService {
 
         item.setItemName(request.getItemName());
         item.setDescription(request.getDescription());
+        item.setPurchased(request.getPurchased());
 
         repository.save(item);
 

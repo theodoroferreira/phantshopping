@@ -1,7 +1,9 @@
 package com.api.phantshopping.framework.controller;
 
 import com.api.phantshopping.application.service.UserService;
+import com.api.phantshopping.domain.dto.request.AuthRequestDto;
 import com.api.phantshopping.domain.dto.request.UserRequestDto;
+import com.api.phantshopping.domain.dto.response.AutenticaUserResponse;
 import com.api.phantshopping.domain.dto.response.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -93,29 +95,6 @@ public class UserController
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    public class AuthRequestDto {
-
-        private String email;
-        private String password;
-
-        // Getters e setters
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-    }
-
     @PostMapping("/autentica-user")
     @Operation(summary = "Autentica User")
     @ApiResponses(value = {
@@ -125,9 +104,20 @@ public class UserController
             @ApiResponse(responseCode = "404", description = "User not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
-    public ResponseEntity<UUID> autenticaUser(@RequestBody AuthRequestDto params)
+    public ResponseEntity<AutenticaUserResponse> autenticaUser(@RequestBody AuthRequestDto params)
     {
-        UUID uuid = service.autenticaUser(params.getEmail(), params.getPassword());
-        return ResponseEntity.status(HttpStatus.OK).body(uuid);
+        try
+        {
+            UUID uuid = service.autenticaUser(params.getEmail(), params.getPassword());
+            var user = service.findUserById(uuid);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new AutenticaUserResponse(uuid, user.getName(), true, "User autenticated successfully.")
+            );
+        } catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new AutenticaUserResponse(null, "", false, e.getMessage())
+            );
+        }
     }
 }

@@ -15,5 +15,6 @@ public class ItemRequestDto {
 
     private String itemName;
     private String description;
+    private Boolean purchased;
     private UUID listId;
 }
