@@ -41,6 +41,7 @@ public class SecurityConfig
                     corsConfiguration.setAllowedOrigins(new ArrayList<>()
                     {{
                         add("http://localhost:3000");
+                        add("http://15.229.250.177");
                     }});
                     corsConfiguration.setAllowedMethods(new ArrayList<>()
                     {{
