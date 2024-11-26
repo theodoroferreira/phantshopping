@@ -15,11 +15,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "Name is required.")
     private String name;
-    @Email
+    @Email(message = "Email must be valid.")
     private String email;
-    @NotNull
-//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
+    @NotBlank(message = "Password is required.")
+//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "Password must contain at least a capital letter, a special character and a number.")
     private String password;
 }

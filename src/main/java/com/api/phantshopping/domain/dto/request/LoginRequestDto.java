@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginRequestDto {
 
-    @Email
+    @Email(message = "Email must be valid.")
     private String email;
     private String password;
 }

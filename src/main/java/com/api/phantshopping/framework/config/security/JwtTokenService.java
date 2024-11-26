@@ -18,14 +18,14 @@ public class JwtTokenService
     @Value("${token.secret}")
     private String SECRET_KEY;
 
-    private static final String ISSUER = "phantshopping-api";
+    private static final String ISSUER = "phantshopping";
 
-    public String generateToken(UserDetailsImpl user)
-    {
+    public String generateToken(UserDetailsImpl user) {
         try
         {
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
             return JWT.create()
+                    .withIssuer(ISSUER)
                     .withIssuedAt(creationDate())
                     .withExpiresAt(expirationDate())
                     .withSubject(user.getUsername())
@@ -36,8 +36,7 @@ public class JwtTokenService
         }
     }
 
-    public String getSubjectFromToken(String token)
-    {
+    public String getSubjectFromToken(String token) {
         try
         {
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
@@ -51,18 +50,7 @@ public class JwtTokenService
         }
     }
 
-    private Instant creationDate()
-    {
-        return ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).toInstant();
-    }
-
-    private Instant expirationDate()
-    {
-        return ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).plusHours(4).toInstant();
-    }
-
-    public boolean validateToken(String token)
-    {
+    public boolean validateToken(String token) {
         try
         {
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
@@ -75,5 +63,13 @@ public class JwtTokenService
         {
             return false;
         }
+    }
+
+    private Instant creationDate() {
+        return ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).toInstant();
+    }
+
+    private Instant expirationDate() {
+        return ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).plusHours(4).toInstant();
     }
 }

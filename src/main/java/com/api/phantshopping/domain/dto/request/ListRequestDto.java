@@ -1,5 +1,6 @@
 package com.api.phantshopping.domain.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,8 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ListRequestDto {
 
-    @NotNull(message = "listName is required")
+    @NotBlank(message = "List name is required")
     private String listName;
-    @NotNull(message = "userId is required")
     private UUID userId;
 }

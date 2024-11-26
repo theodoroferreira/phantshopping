@@ -1,5 +1,6 @@
 package com.api.phantshopping.application.service.impl;
 
+import com.api.phantshopping.application.repository.RoleRepository;
 import com.api.phantshopping.application.repository.UserRepository;
 import com.api.phantshopping.application.service.UserService;
 import com.api.phantshopping.domain.dto.request.UserRequestDto;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 @Service
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final RoleRepository roleRepository;
 
     private final SecurityConfig securityConfig;
 
@@ -30,6 +33,11 @@ public class UserServiceImpl implements UserService {
         User user = UserTranslator.builder().build().fromRequestToEntity(request, securityConfig
                 .passwordEncoder()
                 .encode(request.getPassword()));
+
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new IllegalStateException("Role not found"));
+        user.setRoles(Collections.singletonList(userRole));
+
         return UserTranslator.builder().build().toResponse(repository.save(user));
     }
 
