@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -67,7 +68,7 @@ public class ListController
         return ResponseEntity.status(HttpStatus.OK).body(service.findListById(id));
     }
 
-    @PutMapping("update-list/{id}")
+    @PutMapping("/update-list/{id}")
     @Operation(summary = "Update List")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "List updated successfully.",
@@ -81,7 +82,7 @@ public class ListController
         return ResponseEntity.status(HttpStatus.OK).body(service.updateList(id, request));
     }
 
-    @DeleteMapping("delete-list/{id}")
+    @DeleteMapping("/delete-list/{id}")
     @Operation(summary = "Delete List")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "List deleted successfully.",
@@ -91,8 +92,22 @@ public class ListController
     })
     public ResponseEntity<Void> deleteList(@PathVariable UUID id)
     {
-        service.deleteList(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        try
+        {
+            ListResponseDto list = service.findListById(id);
+            if (list != null)
+            {
+                service.deleteById(id);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+            else
+            {
+                throw new EntityNotFoundException("List not found with id: " + id);
+            }
+        } catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/find-list-by-user/{userId}")

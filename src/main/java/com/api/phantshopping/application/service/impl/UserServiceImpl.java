@@ -12,7 +12,6 @@ import com.api.phantshopping.domain.model.User;
 import com.api.phantshopping.framework.config.security.SecurityConfig;
 import com.api.phantshopping.framework.translate.UserTranslator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,7 +20,8 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService
+{
 
     private final UserRepository repository;
     private final RoleRepository roleRepository;
@@ -29,7 +29,8 @@ public class UserServiceImpl implements UserService {
     private final SecurityConfig securityConfig;
 
     @Override
-    public UserResponseDto createUser(UserRequestDto request) {
+    public UserResponseDto createUser(UserRequestDto request)
+    {
         User user = UserTranslator.builder().build().fromRequestToEntity(request, securityConfig
                 .passwordEncoder()
                 .encode(request.getPassword()));
@@ -42,7 +43,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public java.util.List<UserResponseDto> findAllUsers() {
+    public java.util.List<UserResponseDto> findAllUsers()
+    {
         java.util.List<UserResponseDto> users = new ArrayList<>();
         repository.findAll().forEach(user -> {
             users.add(UserTranslator.builder().build().toResponse(user));
@@ -51,12 +53,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto findUserById(UUID id) {
+    public UserResponseDto findUserById(UUID id)
+    {
         return UserTranslator.builder().build().toResponse(repository.findById(id).get());
     }
 
     @Override
-    public UserResponseDto updateUser(UUID id, UserRequestDto request) {
+    public UserResponseDto updateUser(UUID id, UserRequestDto request)
+    {
         User user = repository.findById(id).get();
 
         user.setName(request.getName());
@@ -69,12 +73,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UUID id) {
+    public void deleteUser(UUID id)
+    {
         repository.deleteById(id);
     }
 
     @Override
-    public void addListToUser(UUID userId, List list) {
+    public void addListToUser(UUID userId, List list)
+    {
         User user = repository.findById(userId).get();
         list.setUser(user);
         user.getLists().add(list);
@@ -82,14 +88,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addItem(UUID userId) {
+    public void addItem(UUID userId)
+    {
         User user = repository.findById(userId).get();
         user.setItemsAdded(user.getItemsAdded() + 1);
         repository.save(user);
     }
 
     @Override
-    public void subtractItem(UUID userId) {
+    public void subtractItem(UUID userId)
+    {
         User user = repository.findById(userId).get();
         user.setItemsAdded(user.getItemsAdded() - 1);
         repository.save(user);

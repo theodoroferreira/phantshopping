@@ -35,6 +35,7 @@ public class AuthController
         return ResponseEntity.ok(LoginResponseDto.builder()
                 .token(jwt)
                 .id(((UserDetailsImpl) authentication.getPrincipal()).user().getId())
+                .nome(((UserDetailsImpl) authentication.getPrincipal()).user().getName())
                 .build());
     }
 }

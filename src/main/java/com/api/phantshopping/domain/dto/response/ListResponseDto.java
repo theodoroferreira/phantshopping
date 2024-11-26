@@ -12,9 +12,12 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListResponseDto {
+public class ListResponseDto
+{
 
     private UUID listId;
     private String listName;
     private List<ItemResponseDto> items;
+    private boolean ListEmpty = false;
+    private boolean AllItemsPurchased = false;
 }

@@ -10,9 +10,11 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Builder
-public class ListTranslator {
+public class ListTranslator
+{
 
-    public ListResponseDto toResponse(@NotNull final List from) {
+    public ListResponseDto toResponse(@NotNull final List from)
+    {
         return ListResponseDto.builder()
                 .listId(from.getId())
                 .listName(from.getListName())
@@ -20,10 +22,15 @@ public class ListTranslator {
                         .stream()
                         .map(item -> ItemTranslator.builder().build().toResponse(item))
                         .collect(Collectors.toList()))
+                .AllItemsPurchased(from.getItems()
+                        .stream()
+                        .allMatch(item -> item.getPurchased()))
+                .ListEmpty(from.getItems().isEmpty())
                 .build();
     }
 
-    public List fromRequestToEntity(@NotNull final ListRequestDto from) {
+    public List fromRequestToEntity(@NotNull final ListRequestDto from)
+    {
         return List.builder()
                 .listName(from.getListName())
                 .items(Collections.emptyList())
@@ -31,7 +38,8 @@ public class ListTranslator {
 
     }
 
-    public List toEntity(@NotNull final ListResponseDto from) {
+    public List toEntity(@NotNull final ListResponseDto from)
+    {
         return List.builder()
                 .id(from.getListId())
                 .listName(from.getListName())

@@ -24,6 +24,7 @@ public class Item {
     private String description;
     private Boolean purchased;
     @ManyToOne
+    @JoinColumn(name = "list_id", nullable = false)
     @JsonBackReference
     private List list;
 

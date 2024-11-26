@@ -12,14 +12,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ListServiceImpl implements ListService
 {
-
     private final ListRepository repository;
     private final UserService userService;
 
@@ -58,7 +56,7 @@ public class ListServiceImpl implements ListService
     }
 
     @Override
-    public void deleteList(UUID id)
+    public void deleteById(UUID id)
     {
         repository.deleteById(id);
     }

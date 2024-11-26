@@ -10,8 +10,6 @@ import java.util.UUID;
 public interface ListRepository extends JpaRepository<List, UUID>
 {
 
-    java.util.List<List> findAll();
-
     java.util.List<List> findListByUserId(UUID userId);
 
 }

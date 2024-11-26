@@ -15,4 +15,5 @@ public class LoginResponseDto {
 
     private String token;
     private UUID id;
+    private String nome;
 }

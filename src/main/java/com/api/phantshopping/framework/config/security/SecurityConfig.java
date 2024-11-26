@@ -1,6 +1,5 @@
 package com.api.phantshopping.framework.config.security;
 
-import com.api.phantshopping.framework.config.cors.WebConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,13 +26,14 @@ public class SecurityConfig
     private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, WebConfig webConfig) throws Exception
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/users/create-user").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/error").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/swagger-ui/index.html").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(request -> {
