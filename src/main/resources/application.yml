@@ -6,9 +6,9 @@ spring:
   application:
     name: phantshopping
   datasource:
-    url: jdbc:postgresql://localhost:5432/phantshopping_db
+    url: jdbc:postgresql://52.67.226.104:5432/listadecompras
     username: postgres
-    password: root
+    password: 123456
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

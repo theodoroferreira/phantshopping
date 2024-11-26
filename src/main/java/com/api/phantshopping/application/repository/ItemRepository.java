@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, UUID> {
+public interface ItemRepository extends JpaRepository<Item, UUID>
+{
 
     List<Item> findAll();
 

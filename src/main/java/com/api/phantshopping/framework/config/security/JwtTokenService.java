@@ -1,6 +1,7 @@
 package com.api.phantshopping.framework.config.security;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
@@ -54,10 +55,13 @@ public class JwtTokenService
         try
         {
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
-            JWT.require(algorithm)
+
+            JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(ISSUER)
-                    .build()
-                    .verify(token);
+                    .build();
+
+            // Se o token for válido, ele não gera exceção, portanto, retornamos verdadeiro
+            verifier.verify(token);
             return true;
         } catch (JWTVerificationException exception)
         {

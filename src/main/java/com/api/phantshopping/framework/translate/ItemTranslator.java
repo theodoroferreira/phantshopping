@@ -11,6 +11,7 @@ public class ItemTranslator {
 
     public ItemResponseDto toResponse(@NotNull final Item from) {
         return ItemResponseDto.builder()
+                .Id(from.getId())
                 .itemName(from.getItemName())
                 .description(from.getDescription())
                 .build();
