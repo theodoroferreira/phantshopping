@@ -1,9 +1,14 @@
 package com.api.phantshopping.framework.controller;
 
 import com.api.phantshopping.domain.dto.request.LoginRequestDto;
+import com.api.phantshopping.domain.dto.response.ItemResponseDto;
 import com.api.phantshopping.domain.dto.response.LoginResponseDto;
 import com.api.phantshopping.framework.config.security.JwtTokenService;
 import com.api.phantshopping.framework.config.security.UserDetailsImpl;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

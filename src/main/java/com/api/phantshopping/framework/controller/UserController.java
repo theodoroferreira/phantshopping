@@ -83,7 +83,7 @@ public class UserController
     @Operation(summary = "Delete User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "User deleted successfully.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })

@@ -62,7 +62,7 @@ public class ItemServiceImpl implements ItemService
     @Override
     public void deleteItem(UUID id)
     {
-        repository.deleteById(id);
+        repository.findById(id).ifPresent(repository::delete);
     }
 
     @Override

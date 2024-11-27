@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class ListController
     @Operation(summary = "Create List")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "List created successfully.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ListResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
@@ -44,7 +45,7 @@ public class ListController
     @Operation(summary = "Find All Lists")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Lists successfully found.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ListResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "404", description = "Lists not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
@@ -58,7 +59,7 @@ public class ListController
     @Operation(summary = "Find List by Identifier")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "List successfully found.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ListResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "404", description = "List not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
@@ -72,7 +73,7 @@ public class ListController
     @Operation(summary = "Update List")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "List updated successfully.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ListResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "404", description = "List not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
@@ -86,7 +87,7 @@ public class ListController
     @Operation(summary = "Delete List")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "List deleted successfully.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
@@ -114,7 +115,7 @@ public class ListController
     @Operation(summary = "Find List by User Identifier")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Lists successfully found.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ListResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "404", description = "Lists not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")

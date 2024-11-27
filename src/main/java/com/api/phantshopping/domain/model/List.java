@@ -21,8 +21,9 @@ public class List {
     private String listName;
     @ManyToOne
     @JsonBackReference
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @JsonManagedReference
-    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private java.util.List<Item> items;
 }

@@ -19,5 +19,6 @@ public class ItemRequestDto {
     private String itemName;
     @NotBlank(message = "Item description is required.")
     private String description;
+    @NotNull(message = "List id must not be null.")
     private UUID listId;
 }

@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ItemController
     @Operation(summary = "Create Item")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Item created successfully.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ItemResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
@@ -43,7 +44,7 @@ public class ItemController
     @Operation(summary = "Find All Items")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Items successfully found.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ItemResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "404", description = "Items not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
@@ -57,7 +58,7 @@ public class ItemController
     @Operation(summary = "Find Item by Identifier")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Item successfully found.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ItemResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "404", description = "Item not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
@@ -71,7 +72,7 @@ public class ItemController
     @Operation(summary = "Update Item")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Item updated successfully.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ItemResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "404", description = "Item not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
@@ -85,7 +86,7 @@ public class ItemController
     @Operation(summary = "Delete Item")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Item deleted successfully.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "500", description = "Internal error.")
     })
@@ -99,7 +100,7 @@ public class ItemController
     @Operation(summary = "Find Items by List Identifier")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Items successfully found.",
-                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+                    content = @Content(schema = @Schema(implementation = ItemResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request."),
             @ApiResponse(responseCode = "404", description = "Items not found."),
             @ApiResponse(responseCode = "500", description = "Internal error.")

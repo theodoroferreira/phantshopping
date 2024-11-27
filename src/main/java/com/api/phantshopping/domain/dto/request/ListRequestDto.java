@@ -15,7 +15,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ListRequestDto {
 
-    @NotBlank(message = "List name is required")
+    @NotBlank(message = "List name is required.")
     private String listName;
+    @NotNull(message = "User id must not be null.")
     private UUID userId;
 }

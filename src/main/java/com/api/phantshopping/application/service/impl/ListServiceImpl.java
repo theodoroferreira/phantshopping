@@ -58,7 +58,7 @@ public class ListServiceImpl implements ListService
     @Override
     public void deleteById(UUID id)
     {
-        repository.deleteById(id);
+        repository.findById(id).ifPresent(repository::delete);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class User {
     private Boolean active;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private java.util.List<List> lists;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
