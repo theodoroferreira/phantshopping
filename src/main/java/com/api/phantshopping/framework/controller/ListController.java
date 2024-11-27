@@ -3,18 +3,15 @@ package com.api.phantshopping.framework.controller;
 import com.api.phantshopping.application.service.ListService;
 import com.api.phantshopping.domain.dto.request.ListRequestDto;
 import com.api.phantshopping.domain.dto.response.ListResponseDto;
-import com.api.phantshopping.domain.dto.response.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,22 +90,8 @@ public class ListController
     })
     public ResponseEntity<Void> deleteList(@PathVariable UUID id)
     {
-        try
-        {
-            ListResponseDto list = service.findListById(id);
-            if (list != null)
-            {
-                service.deleteById(id);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
-            else
-            {
-                throw new EntityNotFoundException("List not found with id: " + id);
-            }
-        } catch (Exception e)
-        {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        service.deleteList(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/find-list-by-user/{userId}")
@@ -122,7 +105,7 @@ public class ListController
     })
     public ResponseEntity<java.util.List<ListResponseDto>> findListByUserId(@PathVariable UUID userId)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findListByUserId(userId));
+        return ResponseEntity.status(HttpStatus.OK).body(service.findListsByUserId(userId));
     }
 
 }

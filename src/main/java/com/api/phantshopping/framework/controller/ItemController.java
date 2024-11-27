@@ -3,7 +3,6 @@ package com.api.phantshopping.framework.controller;
 import com.api.phantshopping.application.service.ItemService;
 import com.api.phantshopping.domain.dto.request.ItemRequestDto;
 import com.api.phantshopping.domain.dto.response.ItemResponseDto;
-import com.api.phantshopping.domain.dto.response.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +12,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

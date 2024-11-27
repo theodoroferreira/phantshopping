@@ -19,7 +19,7 @@ public interface ListService
 
     ListResponseDto updateList(UUID id, ListRequestDto request);
 
-    void deleteById(UUID id);
+    void deleteList(UUID id);
 
-    java.util.List<ListResponseDto> findListByUserId(UUID userId);
+    java.util.List<ListResponseDto> findListsByUserId(UUID userId);
 }

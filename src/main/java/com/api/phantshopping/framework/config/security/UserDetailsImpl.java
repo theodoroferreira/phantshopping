@@ -1,7 +1,6 @@
 package com.api.phantshopping.framework.config.security;
 
 import com.api.phantshopping.domain.model.User;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

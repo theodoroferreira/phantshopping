@@ -5,11 +5,8 @@ import com.api.phantshopping.domain.dto.response.UserResponseDto;
 import com.api.phantshopping.domain.enums.RoleName;
 import com.api.phantshopping.domain.model.Role;
 import com.api.phantshopping.domain.model.User;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.Collections;

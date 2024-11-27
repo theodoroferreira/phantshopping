@@ -22,6 +22,4 @@ public interface UserService
     void addListToUser(UUID userId, com.api.phantshopping.domain.model.List list);
 
     void addItem(UUID userId);
-
-    void subtractItem(UUID userId);
 }

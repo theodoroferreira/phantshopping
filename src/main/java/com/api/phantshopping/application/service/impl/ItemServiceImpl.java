@@ -6,8 +6,10 @@ import com.api.phantshopping.application.service.ListService;
 import com.api.phantshopping.domain.dto.request.ItemRequestDto;
 import com.api.phantshopping.domain.dto.response.ItemResponseDto;
 import com.api.phantshopping.domain.model.Item;
+import com.api.phantshopping.framework.exeption.GenericException;
 import com.api.phantshopping.framework.translate.ItemTranslator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,60 +18,53 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService
-{
+public class ItemServiceImpl implements ItemService {
 
-    private final ItemRepository repository;
+    private final ItemRepository itemRepository;
     private final ListService listService;
 
     @Override
-    public ItemResponseDto create(ItemRequestDto request)
-    {
-        Item item = repository.save(ItemTranslator.builder().build().fromRequestToEntity(request));
+    public ItemResponseDto create(ItemRequestDto request) {
+        Item item = itemRepository.save(ItemTranslator.builder().build().fromRequestToEntity(request));
         listService.addItemToList(request.getListId(), item);
         return ItemTranslator.builder().build().toResponse(item);
     }
 
     @Override
-    public java.util.List<ItemResponseDto> findAll()
-    {
+    public java.util.List<ItemResponseDto> findAll() {
         java.util.List<ItemResponseDto> items = new ArrayList<>();
-        repository.findAll().forEach(item -> {
+        itemRepository.findAll().forEach(item -> {
             items.add(ItemTranslator.builder().build().toResponse(item));
         });
         return items;
     }
 
     @Override
-    public ItemResponseDto findItemById(UUID id)
-    {
-        return ItemTranslator.builder().build().toResponse(repository.findById(id).get());
+    public ItemResponseDto findItemById(UUID id) {
+        return ItemTranslator.builder().build().toResponse(itemRepository.findById(id).orElseThrow(() -> new GenericException(HttpStatus.BAD_REQUEST, "Item not found.")));
     }
 
     @Override
-    public ItemResponseDto updateItem(UUID id, ItemRequestDto request)
-    {
-        Item item = repository.findById(id).get();
+    public ItemResponseDto updateItem(UUID id, ItemRequestDto request) {
+        Item item = itemRepository.findById(id).orElseThrow(() -> new GenericException(HttpStatus.BAD_REQUEST, "Item not found."));
 
         item.setItemName(request.getItemName());
         item.setDescription(request.getDescription());
 
-        repository.save(item);
+        itemRepository.save(item);
 
         return ItemTranslator.builder().build().toResponse(item);
     }
 
     @Override
-    public void deleteItem(UUID id)
-    {
-        repository.findById(id).ifPresent(repository::delete);
+    public void deleteItem(UUID id) {
+        itemRepository.deleteItemByIdNative(id);
     }
 
     @Override
-    public List<ItemResponseDto> findItemsByList(UUID listId)
-    {
+    public List<ItemResponseDto> findItemsByList(UUID listId) {
         List<ItemResponseDto> items = new ArrayList<>();
-        repository.findItemByListId(listId).forEach(item -> items.add(ItemTranslator.builder().build().toResponse(item)));
+        itemRepository.findItemByListId(listId).forEach(item -> items.add(ItemTranslator.builder().build().toResponse(item)));
         return items;
     }
 }
