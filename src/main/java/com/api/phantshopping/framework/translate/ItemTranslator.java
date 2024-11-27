@@ -7,30 +7,36 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public class ItemTranslator {
+public class ItemTranslator
+{
 
-    public ItemResponseDto toResponse(@NotNull final Item from) {
+    public ItemResponseDto toResponse(@NotNull final Item from)
+    {
         return ItemResponseDto.builder()
                 .Id(from.getId())
                 .itemName(from.getItemName())
                 .description(from.getDescription())
+                .listId(from.getList().getId())
+                .purchased(from.getPurchased())
                 .build();
     }
 
-    public Item fromRequestToEntity(@NotNull final ItemRequestDto from) {
+    public Item fromRequestToEntity(@NotNull final ItemRequestDto from)
+    {
         return Item.builder()
                 .itemName(from.getItemName())
                 .description(from.getDescription())
-                .purchased(Boolean.FALSE)
+                .purchased(from.getPurchased())
                 .build();
 
     }
 
-    public Item toEntity(@NotNull final ItemResponseDto from) {
+    public Item toEntity(@NotNull final ItemResponseDto from)
+    {
         return Item.builder()
                 .itemName(from.getItemName())
                 .description(from.getDescription())
-                .purchased(Boolean.FALSE)
+                .purchased(from.getPurchased())
                 .build();
     }
 }

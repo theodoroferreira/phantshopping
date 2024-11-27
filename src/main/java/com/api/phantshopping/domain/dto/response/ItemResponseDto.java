@@ -14,6 +14,8 @@ import java.util.UUID;
 public class ItemResponseDto {
 
     private UUID Id;
+    private UUID listId;
     private String itemName;
     private String description;
+    private Boolean purchased;
 }

@@ -18,20 +18,23 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService {
+public class ItemServiceImpl implements ItemService
+{
 
     private final ItemRepository itemRepository;
     private final ListService listService;
 
     @Override
-    public ItemResponseDto create(ItemRequestDto request) {
+    public ItemResponseDto create(ItemRequestDto request)
+    {
         Item item = itemRepository.save(ItemTranslator.builder().build().fromRequestToEntity(request));
         listService.addItemToList(request.getListId(), item);
         return ItemTranslator.builder().build().toResponse(item);
     }
 
     @Override
-    public java.util.List<ItemResponseDto> findAll() {
+    public java.util.List<ItemResponseDto> findAll()
+    {
         java.util.List<ItemResponseDto> items = new ArrayList<>();
         itemRepository.findAll().forEach(item -> {
             items.add(ItemTranslator.builder().build().toResponse(item));
@@ -40,16 +43,19 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemResponseDto findItemById(UUID id) {
+    public ItemResponseDto findItemById(UUID id)
+    {
         return ItemTranslator.builder().build().toResponse(itemRepository.findById(id).orElseThrow(() -> new GenericException(HttpStatus.BAD_REQUEST, "Item not found.")));
     }
 
     @Override
-    public ItemResponseDto updateItem(UUID id, ItemRequestDto request) {
+    public ItemResponseDto updateItem(UUID id, ItemRequestDto request)
+    {
         Item item = itemRepository.findById(id).orElseThrow(() -> new GenericException(HttpStatus.BAD_REQUEST, "Item not found."));
 
         item.setItemName(request.getItemName());
         item.setDescription(request.getDescription());
+        item.setPurchased(request.getPurchased());
 
         itemRepository.save(item);
 
@@ -57,12 +63,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void deleteItem(UUID id) {
+    public void deleteItem(UUID id)
+    {
         itemRepository.deleteItemByIdNative(id);
     }
 
     @Override
-    public List<ItemResponseDto> findItemsByList(UUID listId) {
+    public List<ItemResponseDto> findItemsByList(UUID listId)
+    {
         List<ItemResponseDto> items = new ArrayList<>();
         itemRepository.findItemByListId(listId).forEach(item -> items.add(ItemTranslator.builder().build().toResponse(item)));
         return items;
