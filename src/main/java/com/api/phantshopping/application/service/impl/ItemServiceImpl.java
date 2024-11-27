@@ -27,7 +27,7 @@ public class ItemServiceImpl implements ItemService
     @Override
     public ItemResponseDto create(ItemRequestDto request)
     {
-        Item item = itemRepository.save(ItemTranslator.builder().build().fromRequestToEntity(request));
+        Item item = ItemTranslator.builder().build().fromRequestToEntity(request);
         listService.addItemToList(request.getListId(), item);
         return ItemTranslator.builder().build().toResponse(item);
     }

@@ -26,7 +26,7 @@ public class ListServiceImpl implements ListService {
 
     @Override
     public ListResponseDto create(ListRequestDto request) {
-        List list = listRepository.save(ListTranslator.builder().build().fromRequestToEntity(request));
+        List list = ListTranslator.builder().build().fromRequestToEntity(request);
         userService.addListToUser(request.getUserId(), list);
         return ListTranslator.builder().build().toResponse(list);
     }
